@@ -1,0 +1,20 @@
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+  margin-right: 100px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgb(54, 54, 54);
+  border-radius: 20px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgb(44, 42, 42);
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+}

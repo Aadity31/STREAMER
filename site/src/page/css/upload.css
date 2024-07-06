@@ -1,0 +1,72 @@
+.upload-container {
+  display: flex;
+  height: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #000000; /* Optional background for the entire page */
+}
+
+.upload-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: white; /* White background for the upload container */
+  border-radius: 10px; /* Border radius */
+  padding: 20px; /* Padding inside the container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional box shadow for better visibility */
+}
+
+.upload {
+  width: 200px;
+  height: 30px;
+  border: 2px solid #4caf50;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+  margin-right: 10px;
+}
+
+.upload-text {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  color: white;
+}
+
+.upload-bar {
+  width: 0;
+  height: 100%;
+  background-color: #4caf50;
+  animation: uploading 2s infinite;
+}
+
+@keyframes uploading {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+.cancel-button {
+  padding: 5px 10px;
+  font-size: 16px;
+  color: white;
+  background-color: red;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-button:hover {
+  background-color: darkred;
+}

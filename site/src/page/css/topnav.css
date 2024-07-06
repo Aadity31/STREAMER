@@ -1,0 +1,94 @@
+nav {
+  z-index: 1000;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* navigation bar */
+  border-bottom: 1px solid #ffffff;
+  background: #000000;
+  position: fixed;
+  top: 0;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  margin-left: 10px;
+  width: 40px; /* Adjust the width of the logo as needed */
+  height: auto;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.right img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  margin: 12px 15px 8px 0;
+  border: 2px solid #0988fd;
+  cursor: pointer;
+}
+
+.profile-container {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.sub-menu {
+  position: absolute;
+  top: 65px;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  width: 200px;
+  z-index: 1000;
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profile-pic-large {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.username {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.sub-menu-button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: #f9f9f9;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.sub-menu-button:hover {
+  background-color: #f1f1f1;
+}

@@ -1,0 +1,10 @@
+#nprogress .bar {
+  background: rgb(221, 56, 34);
+  height: 3px;
+}
+
+/* Optional spinner customization */
+#nprogress .spinner-icon {
+  border-top-color: rgb(34, 221, 34);
+  border-left-color: rgb(221, 34, 165);
+}

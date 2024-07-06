@@ -1,0 +1,27 @@
+# Dependency directories
+server/node_modules/
+site/node_modules/
+bower_components/
+
+# Build directories
+build/
+dist/
+server/build/
+site/build/
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+
+# Test coverage
+coverage/
+
+# Include src folder from site
+/site/*
+!/site/src/
