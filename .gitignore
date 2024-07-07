@@ -9,6 +9,10 @@ dist/
 server/build/
 site/build/
 
+
+# Ignore contents of public folder in site directory
+site/public/*
+
 # Logs
 *.log
 
