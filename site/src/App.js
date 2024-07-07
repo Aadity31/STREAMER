@@ -1,9 +1,8 @@
+// src/App.js
 import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
+  Routes, Route, useLocation,
 } from "react-router-dom";
 import "./App.css";
 import NProgress from "nprogress";
@@ -19,6 +18,15 @@ import SettingsPage from "./page/settings";
 import Shorts from "./page/shorts";
 import Mpp from "./component/test";
 import Otherprofile from "./component/otherprofile";
+import withAuth from "./middlewares/userauth";
+
+// Wrapping components with withAuth HOC
+const ProtectedUserCard = withAuth(UserCard);
+const ProtectedFeedPage = withAuth(FeedPage);
+const ProtectedMessage = withAuth(Message);
+const ProtectedProfileEdit = withAuth(ProfileEdit);
+const ProtectedSettingsPage = withAuth(SettingsPage);
+
 const App = () => {
   return (
     <Router>
@@ -26,12 +34,12 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Navbar />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignupPage />} />a
-        <Route path="/profile" element={<UserCard />} />
-        <Route path="/feed" element={<FeedPage />} />
-        <Route path="/message" element={<Message />} />
-        <Route path="/editprofile" element={<ProfileEdit />} />
-        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/profile" element={<ProtectedUserCard />} />
+        <Route path="/feed" element={<ProtectedFeedPage />} />
+        <Route path="/message" element={<ProtectedMessage />} />
+        <Route path="/editprofile" element={<ProtectedProfileEdit />} />
+        <Route path="/settings" element={<ProtectedSettingsPage />} />
         <Route path="/shorts" element={<Shorts />} />
         <Route path="/test" element={<Mpp />} />
         <Route path="/otherprofile" element={<Otherprofile />} />

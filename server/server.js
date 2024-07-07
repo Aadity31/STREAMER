@@ -84,7 +84,7 @@ app.post("/adduser", async (req, res) => {
   }
 });
 
-app.post("/login", async (req, res) => {
+app.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
 
@@ -94,16 +94,14 @@ app.post("/login", async (req, res) => {
     if (result.rows.length === 1) {
       const { user_id } = result.rows[0];
       const token = jwt.sign({ user_id }, JWT_SECRET, { expiresIn: "3d" });
-      res.cookie("token", token, { httpOnly: true, maxAge: 259200000 });
+      
+      // Set cookie with domain and path
+      res.cookie('token', token, { domain: 'localhost', path: '/' });
 
-      res
-        .status(200)
-        .json({ success: true, message: "Login successful", user_id });
+      res.status(200).json({ success: true, message: "Login successful", user_id });
     } else {
       console.warn(`Login failed for username: ${username}`);
-      res
-        .status(401)
-        .json({ success: false, error: "Invalid username or password" });
+      res.status(401).json({ success: false, error: "Invalid username or password" });
     }
   } catch (error) {
     console.error("Error logging in:", error);
