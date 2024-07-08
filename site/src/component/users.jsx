@@ -18,7 +18,7 @@ function UserList({ users, onSelectUser }) {
               <img
                 src={user.avatar}
                 alt={`${user.name}'s avatar`}
-                className="size-10 rounded-full bg-cover"
+                className="size-10 rounded-full object-cover"
               />
               {user.isActive && (
                 <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-[1px] border-white rounded-full"></span>

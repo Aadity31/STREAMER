@@ -315,7 +315,7 @@ function Message() {
                       <img
                         src={selectedUser.avatar}
                         id="chatter_pic"
-                        className="user-avatar rounded-full size-12 bg-cover"
+                        className="user-avatar rounded-full size-12 object-cover"
                         alt="User Avatar"
                       />
                       {selectedUser.isActive && (
@@ -432,7 +432,7 @@ function Message() {
                         <img
                           src={selectedUser.avatar}
                           id="chatter_pic"
-                          className="user-avatar rounded-full size-40 bg-cover"
+                          className="user-avatar rounded-full size-40 object-cover"
                           alt="User Avatar"
                         />
                       </div>
