@@ -1,48 +1,45 @@
-import React, { useEffect, useState } from "react";
-
-// Define the users array
-const users = [
-  {
-    id: 1,
-    name: "Naruto Uzumaki",
-    avatar: "./naruto.jpeg",
-    messages: [
-      { text: "Hello!", type: "received" },
-      { text: "Hi there!", type: "sent" },
-    ],
-  },
-  {
-    id: 2,
-    name: "Madara Uchiha",
-    avatar: "./madara.jpeg",
-    messages: [
-      { text: "Hey!", type: "received" },
-      { text: "What's up?", type: "sent" },
-    ],
-  },
-];
+import React from "react";
 
 // Define the UserList component
 function UserList({ users, onSelectUser }) {
   return (
-    <div className="user-list">
-      {users.map((user) => (
-        <div
-          key={user.id}
-          className="hover:bg-slate-700 user-item flex items-center p-2 border-b border-gray-700 cursor-pointer"
-          onClick={() => onSelectUser(user)} // Pass the whole user object to onSelectUser function
-        >
-          <img
-            src={user.avatar}
-            alt={`${user.name}'s avatar`}
-            className="w-10 h-10 rounded-full mr-3"
-          />
-          <div className="text-white">{user.name}</div>
-        </div>
-      ))}
+    <div className="user-list ml-1">
+      {users.map((user) => {
+        const lastSentMessage = user.messages
+          .filter((msg) => msg.type === "sent")
+          .pop();
+        return (
+          <div
+            key={user.id}
+            className="hover:bg-[#0e0e0e] user-item flex items-center p-2 cursor-pointer"
+            onClick={() => onSelectUser(user)} // Pass the whole user object to onSelectUser function
+          >
+            <div className="relative mr-4">
+              <img
+                src={user.avatar}
+                alt={`${user.name}'s avatar`}
+                className="size-10 rounded-full bg-cover"
+              />
+              {user.isActive && (
+                <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-[1px] border-white rounded-full"></span>
+              )}
+            </div>
+            <div className="text-white">
+              <div>{user.name}</div>
+              {lastSentMessage && (
+                <div className="text-gray-400 text-sm">
+                  {lastSentMessage.text.length > 20
+                    ? lastSentMessage.text.substring(0, 20) + "..."
+                    : lastSentMessage.text}
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
 
 // Export both users array and UserList component
-export { users, UserList };
+export { UserList };

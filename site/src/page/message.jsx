@@ -4,6 +4,18 @@ import Picker from "@emoji-mart/react";
 import LeftNavHidden from "./shortnav";
 import { UserList } from "../component/users";
 
+// Utility function to get the current timestamp
+function getCurrentTimestamp() {
+  const now = new Date();
+  return now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+}
+
+// Utility function to get the current date
+function getCurrentDate() {
+  const now = new Date();
+  return now.toISOString().split("T")[0];
+}
+
 function Message() {
   const [activeTab, setActiveTab] = useState("friends");
   const [isPickerVisible, setPickerVisible] = useState(false);
@@ -39,8 +51,18 @@ function Message() {
           name: friend.full_name,
           avatar: friend.profile_path,
           messages: [
-            { text: "Hey!", type: "received" },
-            { text: "What's up?", type: "sent" },
+            {
+              text: "Hello!",
+              type: "received",
+              timestamp: "10:30 AM",
+              date: "2023-06-01",
+            },
+            {
+              text: "Hi there!",
+              type: "sent",
+              timestamp: "10:31 AM",
+              date: "2023-06-01",
+            },
           ],
         }));
 
@@ -150,12 +172,17 @@ function Message() {
         messageContent = newMessage;
       }
 
-      const newMessageObject = { text: messageContent, type: "sent" };
+      const newMessageObject = {
+        text: messageContent,
+        type: "sent",
+        timestamp: getCurrentTimestamp(),
+        date: getCurrentDate(),
+      };
 
       // Update the messages state for rendering
       const formdata = new FormData();
       formdata.append("message", messages);
-      
+
       setMessages([...messages, newMessageObject]);
       setNewMessage("");
       setFilePreview(null);
@@ -198,6 +225,17 @@ function Message() {
       dummy.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
+
+  function getWordCount(text) {
+    if (typeof text === "string") {
+      return text.trim().split(/\s+/).length;
+    } else {
+      return 0;
+    }
+  }
+
+  const WORD_LIMIT = 6; // Set the word limit for inline timestamp
+  let lastDate = null;
 
   return (
     <>
@@ -268,8 +306,8 @@ function Message() {
               {activeTab === "requests" && <div>moye moye requests</div>}
             </div>
           </div>
-          {selectedUser && (
-            <div className="w-full flex flex-col h-full bg-[#0f0f0f2f]">
+          {selectedUser ? (
+            <div className="w-full flex flex-col h-full bg-[#070707]">
               <div className="flex items-center justify-between relative w-full h-[70px] border-b border-[#a59999] bg-neutral-950 p-2">
                 <div className=" flex-1 relative">
                   <div className="flex flex-row bg-transparent items-center">
@@ -277,11 +315,11 @@ function Message() {
                       <img
                         src={selectedUser.avatar}
                         id="chatter_pic"
-                        className="user-avatar rounded-full size-12"
+                        className="user-avatar rounded-full size-12 bg-cover"
                         alt="User Avatar"
                       />
                       {selectedUser.isActive && (
-                        <span className="absolute bottom-0 right-0 size-12 bg-transparent border-[1px] border-green-700 rounded-full"></span>
+                        <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-[1px] border-green-600 rounded-full"></span>
                       )}
                     </div>
                     <div className="font-mono text-white ml-2 flex flex-col font-extrabold">
@@ -386,48 +424,104 @@ function Message() {
                   </button>
                 </div>
               </div>
-              <div className="flex-1 flex flex-col mr-1 scrollbar-thin overflow-y-auto bg-transparent h-[calc(100% - 70px)]">
-                <main className="flex flex-col items-end h-full scrollbar-thin overflow-y-auto size-auto text-white p-1">
-                  {messages.map((message, index) => (
-                    <div
-                      key={index}
-                      className={`p-2 rounded-lg mb-2 max-w-[65%] ${
-                        message.type === "sent"
-                          ? "bg-blue-600 self-end"
-                          : "bg-blue-600 self-start"
-                      }`}
-                      style={{ overflowWrap: "break-word" }}
-                    >
-                      {message.type === "file" && (
-                        <div className="attachment-preview">
-                          {message.fileType.startsWith("image") ? (
-                            <img
-                              src={message.filePreview}
-                              alt="Attachment Preview"
-                              className="max-w-xs"
-                            />
-                          ) : message.fileType.startsWith("video") ? (
-                            <video controls className="max-w-xs">
-                              <source
-                                src={message.filePreview}
-                                type={message.fileType}
-                              />
-                              Your browser does not support the video tag.
-                            </video>
-                          ) : message.fileType.startsWith("application/pdf") ? (
-                            <embed
-                              src={message.filePreview}
-                              type="application/pdf"
-                              className="max-w-xs"
-                            />
-                          ) : (
-                            <div>Unsupported file type</div>
+              <div className="flex-1 flex flex-col mr-1 scrollbar-thin overflow-y-auto bg-[#020202] h-[calc(100% - 70px)]">
+                <main className="flex flex-col items-end h-full scrollbar-thin overflow-y-auto overflow-x-hidden size-auto text-white p-1">
+                  <div className="w-full flex items-center justify-center h-80 bg-transparent">
+                    <div className="flex flex-col bg-transparent items-center">
+                      <div className="relative mr-4">
+                        <img
+                          src={selectedUser.avatar}
+                          id="chatter_pic"
+                          className="user-avatar rounded-full size-40 bg-cover"
+                          alt="User Avatar"
+                        />
+                      </div>
+                      <div className="font-mono text-white text-3xl flex flex-col font-extrabold">
+                        <span id="chatter_username">{selectedUser.name}</span>
+                        <span id="chatter_bio">{selectedUser.bio}</span>
+                      </div>
+                      <div className="flex items-center text-base font-bold mt-4">
+                        <button className="text-white px-3 py-1 rounded-md transition ease-in-out delay-150 bg-gray-700  hover:bg-indigo-500 duration-300">
+                          User Profile
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {messages.map((message, index) => {
+                    const showDateSeparator = message.date !== lastDate;
+                    lastDate = message.date;
+                    return (
+                      <React.Fragment key={index}>
+                        {showDateSeparator && (
+                          <div className="relative my-4 w-full flex items-center justify-center">
+                            <div className="absolute inset-0 flex items-center">
+                              <div className="w-full border-t border-double animate-pulse border-gray-400"></div>
+                            </div>
+                            <div className="relative bg-[#020202] text-xs px-2 text-gray-400">
+                              {new Date(message.date).toLocaleDateString([], {
+                                weekday: "long",
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                              })}
+                            </div>
+                          </div>
+                        )}
+                        <div
+                          className={`p-2 rounded-lg mb-2 max-w-[65%] ${
+                            message.type === "sent"
+                              ? "bg-gray-700 self-end"
+                              : "bg-gray-600 self-start"
+                          }`}
+                          style={{ overflowWrap: "break-word" }}
+                        >
+                          {message.type === "file" && (
+                            <div className="attachment-preview">
+                              {message.fileType.startsWith("image") ? (
+                                <img
+                                  src={message.filePreview}
+                                  alt="Attachment Preview"
+                                  className="max-w-xs"
+                                />
+                              ) : message.fileType.startsWith("video") ? (
+                                <video controls className="max-w-xs">
+                                  <source
+                                    src={message.filePreview}
+                                    type={message.fileType}
+                                  />
+                                  Your browser does not support the video tag.
+                                </video>
+                              ) : message.fileType.startsWith(
+                                  "application/pdf"
+                                ) ? (
+                                <embed
+                                  src={message.filePreview}
+                                  type="application/pdf"
+                                  className="max-w-xs"
+                                />
+                              ) : (
+                                <div>Unsupported file type</div>
+                              )}
+                            </div>
+                          )}
+                          <div className="message-text">
+                            {message.text}
+                            {getWordCount(message.text) <= WORD_LIMIT && (
+                              <span className="timestamp-inline text-[9px]  text-right text-gray-300 ml-2">
+                                {message.timestamp}
+                              </span>
+                            )}
+                          </div>
+                          {getWordCount(message.text) > WORD_LIMIT && (
+                            <div className="text-[9px] line-clamp-1 text-gray-300 text-right mt-1">
+                              {message.timestamp}
+                            </div>
                           )}
                         </div>
-                      )}
-                      {message.text}
-                    </div>
-                  ))}
+                      </React.Fragment>
+                    );
+                  })}
 
                   <span ref={dummy}></span>
                 </main>
@@ -458,7 +552,7 @@ function Message() {
                 </div>
               )}
 
-              <div className="bottom-0 h-[70px] left-0 bg-transparent  flex items-center">
+              <div className="bottom-0 h-[70px] left-0 bg-[#020202]  flex items-center">
                 <div className="mx-3 rounded-full flex items-center border w-full md:w-full border-[#999191] relative">
                   <div className="flex items-center w-full">
                     <button
@@ -618,6 +712,24 @@ function Message() {
                     </svg>
                   </button>
                 </div>
+              </div>
+            </div>
+          ) : (
+            <div className="w-full flex flex-col items-center justify-center  h-full bg-[#000000]">
+              <div className="flex flex-col mx-auto items-center justify-center align-center">
+                <img
+                  className="align-center opacity-70"
+                  src="/siteimage/logo.png"
+                  alt="Streamer Logo"
+                  width={80}
+                  height={80}
+                />
+                <div className="text-white font-serif mt-2 text-xl font-bold ">
+                  STREAMER
+                </div>
+              </div>
+              <div className="text-stone-100 font-serif mt-4 text-xl font-bold">
+                select user to chat
               </div>
             </div>
           )}
