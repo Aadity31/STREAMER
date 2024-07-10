@@ -15,7 +15,7 @@ export const Navbar = () => {
             height={50}
           />
           <div className="align-center mt-2 ml-4 text-[30px] font-black">
-            TOURNAMENTOR
+            STREAMER
           </div>
         </div>
         <ul className="flex flex-row mb-4 items-end justify-between align-center">
@@ -59,7 +59,7 @@ export const Navbar = () => {
             width={100}
             height={100}
           />
-          <h2 className="font-extrabold text-[25px]">TOURNAMENTOR</h2>
+          <h2 className="font-extrabold text-[25px]">STREAMER</h2>
           <p className="slogan m-2 text-[#f0f8ff] text-[20px] font-serif">
             Where your relationship begins
           </p>
