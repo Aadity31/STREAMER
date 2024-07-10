@@ -79,7 +79,6 @@ function Message() {
           ],
         }));
 
-
         setUsers(formattedUsers);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -91,8 +90,6 @@ function Message() {
 
     fetchUsers();
   }, []);
-
-  
 
   useEffect(() => {
     const fetchUsers = async () => {
