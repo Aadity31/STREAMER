@@ -3,6 +3,7 @@ import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import LeftNavHidden from "./shortnav";
 import { UserList } from "../component/users";
+import { requests, RequestsList } from "../component/request";
 
 // Utility function to get the current timestamp
 function getCurrentTimestamp() {
@@ -21,7 +22,7 @@ function Message() {
   const [isPickerVisible, setPickerVisible] = useState(false);
   const [selectedEmojis, setSelectedEmojis] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
-
+  const [selectedRequest, setSelectedRequest] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [filePreview, setFilePreview] = useState(null);
@@ -30,10 +31,22 @@ function Message() {
   const pickerRef = useRef(null);
   const inputRef = useRef();
   const dummy = useRef();
-
+  const [requestList, setRequestList] = useState(requests);
   const [users, setUsers] = useState([]);
+  const [requests, setRequests] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const handleAcceptRequest = (id) => {
+    alert(`Request ${id} accepted!`);
+    setRequestList(requestList.filter((request) => request.id !== id));
+  };
+
+  const handleDeclineRequest = (id) => {
+    alert(`Request ${id} declined!`);
+    setRequestList(requestList.filter((request) => request.id !== id));
+  };
+
   useEffect(() => {
     const fetchUsers = async () => {
       setIsLoading(true);
@@ -133,6 +146,9 @@ function Message() {
     setMessages(user.messages);
   };
 
+  const handleSelectRequest = (request) => {
+    setSelectedRequest(request);
+  };
   const handleClick = () => {
     fileInputRef.current.click();
   };
@@ -298,14 +314,57 @@ function Message() {
               id="chat_list"
             >
               {activeTab === "friends" && (
-                <div className="">
-                  <UserList users={users} onSelectUser={handleSelectUser} />
+                <div
+                  className={`h-full ${
+                    users.length === 0 ? "flex items-center justify-center" : ""
+                  }`}
+                >
+                  {users.length > 0 ? (
+                    <UserList users={users} onSelectUser={handleSelectUser} />
+                  ) : (
+                    <div className=" flex flex-col items-center justify-center gap-4">
+                      <h1 className="items-center justify-center font-bold">
+                        Opps..
+                      </h1>
+                      <p>You are alone hear</p>
+                      <p>Go make some FRIENDS!</p>
+
+                      <button className="p-2 bg-slate-500 hover:bg-slate-700 rounded-lg shadow-lg">
+                        Search Friends
+                      </button>
+
+                      {/* Add more content or styling as needed */}
+                    </div>
+                  )}
                 </div>
               )}
               {activeTab === "groups" && <div>moye moye groups</div>}
-              {activeTab === "requests" && <div>moye moye requests</div>}
+              {activeTab === "requests" && (
+                <div
+                  className={`h-full ${
+                    requests.length === 0
+                      ? "flex items-center justify-center"
+                      : ""
+                  }`}
+                >
+                  {requests.length > 0 ? (
+                    <RequestsList
+                      requests={requestList}
+                      onSelectRequest={handleSelectRequest}
+                      onAcceptRequest={handleAcceptRequest}
+                      onDeclineRequest={handleDeclineRequest}
+                    />
+                  ) : (
+                    <div className="dummy-page flex flex-col items-center justify-center p-8 bg-gray-800 rounded-lg shadow-lg">
+                      <p>No requests found</p>
+                      {/* Add more content or styling as needed */}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
+
           {selectedUser ? (
             <div className="w-full flex flex-col h-full bg-[#070707]">
               <div className="flex items-center justify-between relative w-full h-[70px] border-b border-[#a59999] bg-neutral-950 p-2">

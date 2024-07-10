@@ -2,7 +2,9 @@
 import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
-  Routes, Route, useLocation,
+  Routes,
+  Route,
+  useLocation,
 } from "react-router-dom";
 import "./App.css";
 import NProgress from "nprogress";
@@ -19,6 +21,7 @@ import Shorts from "./page/shorts";
 import Mpp from "./component/test";
 import Otherprofile from "./component/otherprofile";
 import withAuth from "./middlewares/userauth";
+import Go from "./page/go";
 
 // Wrapping components with withAuth HOC
 const ProtectedUserCard = withAuth(UserCard);
@@ -43,6 +46,7 @@ const App = () => {
         <Route path="/shorts" element={<Shorts />} />
         <Route path="/test" element={<Mpp />} />
         <Route path="/otherprofile" element={<Otherprofile />} />
+        <Route path="/go" element={<Go />} />
       </Routes>
     </Router>
   );

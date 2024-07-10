@@ -11,7 +11,7 @@ function UserList({ users, onSelectUser }) {
         return (
           <div
             key={user.id}
-            className="hover:bg-[#0e0e0e] user-item flex items-center p-2 cursor-pointer"
+            className="hover:bg-[#0e0e0e] user-item flex items-center p-2 cursor-pointer after:hover:bg-slate-400"
             onClick={() => onSelectUser(user)} // Pass the whole user object to onSelectUser function
           >
             <div className="relative mr-4">
