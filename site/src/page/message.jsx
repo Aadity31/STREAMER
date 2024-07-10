@@ -79,7 +79,6 @@ function Message() {
           ],
         }));
 
-        // const formattedUsers = [{ id: "adlkdf", name: "sldkjf" }];
 
         setUsers(formattedUsers);
       } catch (error) {
@@ -92,6 +91,8 @@ function Message() {
 
     fetchUsers();
   }, []);
+
+  
 
   useEffect(() => {
     const fetchUsers = async () => {

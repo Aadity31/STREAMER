@@ -139,7 +139,7 @@ const SignupPage = () => {
             height={100}
           />
           <div className="text-white font-serif mt-6 text-5xl font-bold">
-            <Link to="/">TOURNAMENTOR</Link>
+            <Link to="/">STREAMER</Link>
           </div>
         </div>
 

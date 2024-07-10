@@ -47,7 +47,7 @@ const Leftnav = () => {
       <div className="flex z-50 bg-black">
         <div className="w-[268px] h-screen border-r border-white z-50 bg-black p-4 fixed">
           <div className="flex items-center justify-center mb-3 text-white text-2xl font-mono">
-            TOURNAMENTOR
+            STREAMER
           </div>
 
           <Link
